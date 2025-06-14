@@ -9,7 +9,7 @@ export default class DisplayBoard {
         this.#items = await APICaller.getAll();
     }
 
-    async getItem(APICaller, id) {
+    async getSelectedItem(APICaller, id) {
         this.#selectedItem = await APICaller.get(id);
     }
 

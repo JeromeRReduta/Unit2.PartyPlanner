@@ -9,6 +9,7 @@ export default class DisplayBoardHTML {
 
     #$upcomingParties() {
         const $ul = document.createElement("ul");
+        $ul.className = "upcoming-parties";
         const liStrings = [];
         this.#board.items
             .map((item) => `<li>${item.name}</li>`)
@@ -18,7 +19,16 @@ export default class DisplayBoardHTML {
     }
 
     #$partyDetails() {
-        return document.createElement("div");
+        const $div = document.createElement("div");
+        $div.classNaem = "party-details";
+        const party = this.#board.selectedItem;
+        $div.innerHTML = `
+            <div><b>${party.name} #${party.id}</b></div>
+            <div>${party.date}</div>
+            <div><i>${party.location}</i></div>
+            <div>${party.description}</div>
+        `;
+        return $div;
     }
 
     render() {
@@ -45,5 +55,13 @@ export default class DisplayBoardHTML {
         this.#$app
             .querySelector("PartyDetails")
             .replaceWith(this.#$partyDetails());
+    }
+
+    get board() {
+        return this.#board;
+    }
+
+    get $app() {
+        return this.#$app;
     }
 }

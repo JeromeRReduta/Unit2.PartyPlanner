@@ -8,13 +8,18 @@ function $(id) {
 }
 
 async function main() {
-    console.log("START");
+    init();
+}
+
+async function init() {
     const url =
         "https://fsa-crud-2aa9294fe819.herokuapp.com/api/2504-ftb-et-web-pt/events";
     const reader = new APICaller(url);
-    console.log(await reader.getAll());
-    console.log(await reader.get("7761"));
-    console.log("END");
+    const model = new DisplayBoard();
+    await model.getItems(reader);
+    await model.getSelectedItem(reader, 7761);
+    const view = new DisplayBoardHTML(model, document.querySelector("#app"));
+    view.render();
 }
 
 main();
