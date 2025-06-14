@@ -1,34 +1,35 @@
 export default class APICaller {
-  url;
+    #url;
 
-  constructor(url) {
-    this.url = url;
-  }
-
-  async getAll() {
-    try {
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error(`invalid url: ${url}`);
-      }
-      const json = await response.json();
-      return json.data;
-    } catch (e) {
-      console.error(e);
+    constructor(url) {
+        this.#url = url;
     }
-  }
 
-  async get(id) {
-    try {
-      idUrl = `${this.url}/${id}`;
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error(`invalid url: ${idUrl}`);
-      }
-      const json = response.json();
-      return json.data;
-    } catch (e) {
-      console.error(e);
+    async getAll() {
+        try {
+            const response = await fetch(this.#url);
+            if (!response.ok) {
+                throw new Error(`invalid url: ${this.#url}`);
+            }
+            const json = await response.json();
+            return json.data;
+        } catch (e) {
+            console.error(e);
+        }
     }
-  }
+
+    async get(id) {
+        try {
+            const idUrl = `${this.#url}/${id}`;
+            console.log(`idURL is: ${idUrl}`);
+            const response = await fetch(idUrl);
+            if (!response.ok) {
+                throw new Error(`invalid url: ${idUrl}`);
+            }
+            const json = await response.json();
+            return json.data;
+        } catch (e) {
+            console.error(e);
+        }
+    }
 }

@@ -1,14 +1,28 @@
 export default class DisplayBoardHTML {
-  board;
-  $app;
+    #board;
+    #$app;
 
-  constructor(board, $app) {
-    this.board = board;
-    this.$app = $app;
-  }
+    constructor(board, $app) {
+        this.#board = board;
+        this.#$app = $app;
+    }
 
-  render() {
-    this.$app.innerHTML = `
+    #$upcomingParties() {
+        const $ul = document.createElement("ul");
+        const liStrings = [];
+        this.#board.items
+            .map((item) => `<li>${item.name}</li>`)
+            .forEach((li) => liStrings.push(li));
+        $ul.innerHTML = liStrings.join("\n");
+        return $ul;
+    }
+
+    #$partyDetails() {
+        return document.createElement("div");
+    }
+
+    render() {
+        this.#$app.innerHTML = `
         <main>
             <section class="first">
                 <h1>Party Planner</h1>
@@ -25,9 +39,11 @@ export default class DisplayBoardHTML {
             </section>
         </main>
         `;
-    this.$app
-      .querySelector("UpcomingParties")
-      .replaceWith(this.upcomingParties());
-    this.$app.querySelector("ArtistDetails").replaceWith(this.artistDetails());
-  }
+        this.#$app
+            .querySelector("UpcomingParties")
+            .replaceWith(this.#$upcomingParties());
+        this.#$app
+            .querySelector("PartyDetails")
+            .replaceWith(this.#$partyDetails());
+    }
 }
