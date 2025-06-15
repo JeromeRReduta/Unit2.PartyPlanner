@@ -11,27 +11,38 @@ export default class DisplayBoardHTML {
 
     #$upcomingParties() {
         const $ul = document.createElement("ul");
-        $ul.className = "upcoming-parties";
+        $ul.id = "upcoming-parties";
         const liStrings = [];
         this.#board.itemLookup.forEach((value, key) => {
-            // so apparently js map.foreach() takes args in order of value, THEN key
-            const $li = `<li><a href=#${key}>${value.name}</a></li>`;
-            liStrings.push($li);
+            const $li = document.createElement("li");
+            const $a = document.createElement("a");
+            $li.append($a);
+            $a.href = "#";
+            $a.id = key;
+            $a.textContent = value.name;
+            $ul.append($li);
         });
-        $ul.innerHTML = liStrings.join("\n");
+        // so apparently js map.foreach() takes args in order of value, THEN key
+        // const $li = `<li><a href="#" id="${key}">${value.name}</a></li>`;
+
         return $ul;
     }
 
     #$partyDetails() {
         const $div = document.createElement("div");
-        $div.classNaem = "party-details";
+
+        $div.className = "party-details";
         const party = this.#board.selectedItem;
-        $div.innerHTML = `
-            <div><b>${party.name} #${party.id}</b></div>
-            <div>${party.date}</div>
-            <div><i>${party.location}</i></div>
-            <div>${party.description}</div>
-        `;
+        $div.innerHTML = party
+            ? `
+                <div><b>${party.name} #${party.id}</b></div>
+                <div>${party.date}</div>
+                <div><i>${party.location}</i></div>
+                <div>${party.description}</div>
+            `
+            : `
+                <div>Select a party!</div>
+            `;
         return $div;
     }
 

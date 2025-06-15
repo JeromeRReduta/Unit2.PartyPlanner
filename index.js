@@ -16,10 +16,9 @@ async function init() {
         "https://fsa-crud-2aa9294fe819.herokuapp.com/api/2504-ftb-et-web-pt/events";
     const reader = new APICaller(url);
     const model = new DisplayBoard();
-    await model.getItems(reader);
-    await model.getSelectedItem(reader, 7761);
     const view = new DisplayBoardHTML(model, document.querySelector("#app"));
-    view.render();
+    const controller = new DisplayBoardController(model, view, reader);
+    await controller.init();
 }
 
 main();

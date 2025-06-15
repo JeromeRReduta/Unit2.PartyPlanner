@@ -21,7 +21,6 @@ export default class APICaller {
     async get(id) {
         try {
             const idUrl = `${this.#url}/${id}`;
-            console.log(`idURL is: ${idUrl}`);
             const response = await fetch(idUrl);
             if (!response.ok) {
                 throw new Error(`invalid url: ${idUrl}`);

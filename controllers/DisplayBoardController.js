@@ -1,3 +1,7 @@
+function $(id) {
+    return document.getElementById(id);
+}
+
 export default class DisplayBoardController {
     #board;
 
@@ -12,15 +16,31 @@ export default class DisplayBoardController {
     }
 
     async init() {
-        await this.#board.getItems(this.#reader);
-
-        document.addEventListener("click", async (event) => {
-            /* event => this.selectItem(id) */
-            /* then this.#view.render() */
-        });
+        try {
+            await this.board.getItems(this.reader);
+            this.view.render();
+            this.#registerListeners();
+            this.view.render();
+            console.log("done init");
+        } catch (e) {
+            console.error("AAAAAAAAH", e);
+        }
     }
 
-    async selectItem(id) {}
+    #registerListeners() {
+        console.log($("upcoming-parties"));
+        $("upcoming-parties").addEventListener("click", () => {
+            console.log("a");
+            return true;
+        });
+
+        console.log("registered");
+    }
+
+    async selectItem(id) {
+        await this.board.getSelectedItem(this.reader, id);
+        this.view.render();
+    }
 
     get board() {
         return this.#board;
