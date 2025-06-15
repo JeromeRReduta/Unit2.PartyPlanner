@@ -13,14 +13,11 @@ export default class DisplayBoardHTML {
         const $ul = document.createElement("ul");
         $ul.className = "upcoming-parties";
         const liStrings = [];
-        this.#board.items
-            .map((item) => {
-                return `
-                <li>
-                    <a href=#${item.id}>${item.name}</a>
-                </li>`;
-            })
-            .forEach((li) => liStrings.push(li));
+        this.#board.itemLookup.forEach((value, key) => {
+            // so apparently js map.foreach() takes args in order of value, THEN key
+            const $li = `<li><a href=#${key}>${value.name}</a></li>`;
+            liStrings.push($li);
+        });
         $ul.innerHTML = liStrings.join("\n");
         return $ul;
     }
