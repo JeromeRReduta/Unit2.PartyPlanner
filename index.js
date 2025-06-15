@@ -1,7 +1,29 @@
 import PartyData from "./models/PartyData.js";
 import PartyFetcher from "./readers/PartyFetcher.js";
+import PartyListView from "./views/PartyListView.js";
+
+function $(id) {
+    return document.getElementById(id);
+}
 
 async function main() {
+    const $app = $("app");
+    $app.innerHTML = `
+    <section class="top">
+        <h1>Party Planner</h1>
+    </section>
+    <section class="bottom">
+        <section class="left">
+            <h2>Upcoming Parties</h2>
+            <div id="party-list"></div>
+        </section>
+        <section class="right">
+            <h2>Party Details</h2>
+            <PartyDetails></PartyDetails>
+        </section>
+    </section>
+    
+    `;
     const partyUrl =
         "https://fsa-crud-2aa9294fe819.herokuapp.com/api/2504-FTB-ET-WEB-PT/events";
     const reader = new PartyFetcher(partyUrl);
@@ -14,6 +36,10 @@ async function main() {
     console.log("selected before op:", model.selected);
     model.selected = await reader.fetchByID(7761);
     model.selected = null;
+
+    const listView = new PartyListView($("party-list"));
+    listView.subscribe("onClick", (id) => console.log("Clicked on: ", id));
+    listView.draw(model.list);
 }
 
 main();
