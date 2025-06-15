@@ -1,3 +1,5 @@
+// Like 80% of this code is referenced from https://github.com/FullstackAcademy/party-planner-admin/blob/main/index.js
+
 export default class DisplayBoardHTML {
     #board;
     #$app;
@@ -12,7 +14,12 @@ export default class DisplayBoardHTML {
         $ul.className = "upcoming-parties";
         const liStrings = [];
         this.#board.items
-            .map((item) => `<li>${item.name}</li>`)
+            .map((item) => {
+                return `
+                <li>
+                    <a href=#${item.id}>${item.name}</a>
+                </li>`;
+            })
             .forEach((li) => liStrings.push(li));
         $ul.innerHTML = liStrings.join("\n");
         return $ul;

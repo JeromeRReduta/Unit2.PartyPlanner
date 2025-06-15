@@ -12,9 +12,9 @@ export default class DisplayBoardController {
     }
 
     async init() {
-        // set up stuff.....
+        await this.#board.getItems(this.#reader);
 
-        document.addEventListener("click", (event) => {
+        document.addEventListener("click", async (event) => {
             /* event => this.selectItem(id) */
             /* then this.#view.render() */
         });

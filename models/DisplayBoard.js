@@ -1,20 +1,22 @@
 export default class DisplayBoard {
-    #items;
+    #itemLookup = new Map();
 
     #selectedItem;
 
     constructor() {}
 
     async getItems(APICaller) {
-        this.#items = await APICaller.getAll();
+        const fullItems = await APICaller.getAll();
+        fullItems.forEach((item) => this.#itemLookup.set(item.id, item));
+        console.log(this.#itemLookup);
     }
 
     async getSelectedItem(APICaller, id) {
         this.#selectedItem = await APICaller.get(id);
     }
 
-    get items() {
-        return structuredClone(this.#items);
+    get itemLookup() {
+        return structuredClone(this.#itemLookup);
     }
 
     get selectedItem() {
