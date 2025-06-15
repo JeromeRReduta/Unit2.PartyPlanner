@@ -3,6 +3,10 @@ export default class PartyData {
 
     #selected = null;
 
+    #subscribedFuncs = {
+        onSetList: [],
+        onSetSelected: [],
+    };
     constructor() {}
 
     get list() {
@@ -11,6 +15,7 @@ export default class PartyData {
 
     set list(newList) {
         this.#list = newList;
+        this.#subscribedFuncs["onSetList"].forEach((func) => func(this.list));
     }
 
     get selected() {
@@ -19,5 +24,12 @@ export default class PartyData {
 
     set selected(newParty) {
         this.#selected = newParty;
+        this.#subscribedFuncs["onSetSelected"].forEach((func) =>
+            func(this.selected)
+        );
+    }
+
+    subscribe(key, func) {
+        this.#subscribedFuncs[key].push(func);
     }
 }
