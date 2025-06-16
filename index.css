@@ -149,15 +149,17 @@ html {
 .bottom {
     display: flex;
     justify-content: center;
-    margin: 0vh 2vw;
+    width: 100vw;
 }
 
 .left {
     flex: 40 1 40vw;
+    margin: 0vw 5vw;
 }
 
 .right {
     flex: 40 1 40vw;
+    margin: 0vw 5vw;
 }
 
 b {
