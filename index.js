@@ -27,20 +27,33 @@ function initHTML() {
 }
 
 async function initData() {
-    const partyUrl =
-        "https://fsa-crud-2aa9294fe819.herokuapp.com/api/2504-FTB-ET-WEB-PT/events";
-    const fetcher = new PartyFetcher(partyUrl);
-    const model = new PartyData();
-    const listView = new PartyListView($("party-list"));
-    const detailsView = new PartyDetailsView($("party-details"));
-    const viewmodel = new PartyViewModel(fetcher, model, listView, detailsView);
-    viewmodel.init();
-    model.list = await fetcher.fetchAll();
+    try {
+        const partyUrl =
+            "https://fsa-crud-2aa9294fe819.herokuapp.com/api/2504-FTB-ET-WEB-PT/events";
+        const fetcher = new PartyFetcher(partyUrl);
+        const model = new PartyData();
+        const listView = new PartyListView($("party-list"));
+        const detailsView = new PartyDetailsView($("party-details"));
+        const viewmodel = new PartyViewModel(
+            fetcher,
+            model,
+            listView,
+            detailsView
+        );
+        viewmodel.init();
+        model.list = await fetcher.fetchAll();
+    } catch (e) {
+        console.error(e);
+    }
 }
 
 async function main() {
-    initHTML();
-    await initData();
+    try {
+        initHTML();
+        await initData();
+    } catch (e) {
+        console.error(e);
+    }
 }
 
 main();
