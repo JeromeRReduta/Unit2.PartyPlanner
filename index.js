@@ -1,5 +1,6 @@
 import PartyData from "./models/PartyData.js";
 import PartyFetcher from "./readers/PartyFetcher.js";
+import PartyDetailsView from "./views/PartyDetailsView.js";
 import PartyListView from "./views/PartyListView.js";
 
 function $(id) {
@@ -19,7 +20,7 @@ async function main() {
         </section>
         <section class="right">
             <h2>Party Details</h2>
-            <PartyDetails></PartyDetails>
+            <div id="party-details"></div>
         </section>
     </section>
     
@@ -34,12 +35,14 @@ async function main() {
     );
     model.list = await reader.fetchAll();
     console.log("selected before op:", model.selected);
-    model.selected = await reader.fetchByID(7761);
-    model.selected = null;
+    model.selected = await reader.fetchByID(7765);
 
     const listView = new PartyListView($("party-list"));
     listView.subscribe("onClick", (id) => console.log("Clicked on: ", id));
     listView.draw(model.list);
+
+    const detailsView = new PartyDetailsView($("party-details"));
+    detailsView.draw(model.selected);
 }
 
 main();
