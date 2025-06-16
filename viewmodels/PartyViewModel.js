@@ -22,10 +22,14 @@ export default class PartyViewModel {
             this.#detailsView.draw(party)
         );
         this.#listView.subscribe("onClick", async (id) => {
-            if (id !== 0 && !id) {
-                return;
+            try {
+                if (id !== 0 && !id) {
+                    return;
+                }
+                this.#model.selected = await this.#fetcher.fetchByID(id);
+            } catch (e) {
+                console.error(e);
             }
-            this.#model.selected = await this.#fetcher.fetchByID(id);
         });
     }
 }
